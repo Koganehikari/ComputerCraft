@@ -1,20 +1,41 @@
-while (true) do
+while (turtle.getFuelLevel() ~= 0) do
+    turtle.dig()
     turtle.forward()
-    turtle.up()
-    turtle.turnLeft()
+    turtle.dig()
     turtle.forward()
-    turtle.down()
-    turtle.turnLeft()
+    turtle.dig()
     turtle.forward()
-    turtle.up()
-    turtle.turnLeft()
+    turtle.dig()
     turtle.forward()
-    turtle.down()
-    turtle.turnLeft()
-    if (turtle.getFuelLevel() == 0) then
-        turtle.refuel(1)
-            if (turtle.getItemCount() == 0) then
-                break
-            end
-    end
-end
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.turnLeft
+    turtle.dig()
+    turtle.forward()
+    turtle.turnLeft
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
+    turtle.dig()
+    turtle.forward()
