@@ -6,7 +6,7 @@ function digForward()
 end
 
 function refuel()
-    turtle.select(16)
+    turtle.select(1)
     turtle.refuel(1)
 end
 
