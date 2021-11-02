@@ -1,4 +1,4 @@
-slotAtual = 2
+slotAtual = 1
 
 
 function placeDown()
@@ -18,7 +18,7 @@ function digForward()
 end
 
 function refuel()
-    turtle.select(1)
+    turtle.select(16)
     turtle.refuel(1)
 end
 
