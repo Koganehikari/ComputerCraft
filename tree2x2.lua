@@ -1,7 +1,9 @@
-spruceLog = "minecraft:spruce_log"
-sapling = "minecraft:spruce_sapling"
-spruceLeaves = "minecraft:spruce_leaves"
+local spruceLog = "minecraft:spruce_log"
+local sapling = "minecraft:spruce_sapling"
+local spruceLeaves = "minecraft:spruce_leaves"
 local dirt = "minecraft:podzol"
+
+local energiaPorBloco = 15
 
 local function turnRight(numero)
 	local numero = numero or 1
@@ -50,15 +52,15 @@ end
 
          ---NAO SELECIONAR---
 
-function naoSelecionar()
+function naoSelecionar(name)
     for i=1, 16 do
         local info = turtle.getItemDetail(i)
-        if not info or info.name ~= sapling then
+        if not info or info.name ~= name then
             turtle.select(i)
-            break
+			return true
         end
     end
-    return true
+	return false
 end
 
 -------------------------------------------------
@@ -75,8 +77,9 @@ end
 		 
 function guardar()
 	turnAround()
-	naoSelecionar()
-	turtle.drop()
+	while naoSelecionar() do
+		turtle.drop()
+	end
 	turnAround()
 end
 
@@ -95,18 +98,29 @@ function digDown()
 	until info.name == dirt
 end
 
+
+
+------------------------------------------------
+local function selectItem(name)
+	for i = 1, 16 do
+		local info = turtle.getItemDetail(i)
+		if info and info.name == name then
+			turtle.select(i)
+			return true
+		end
+	end
+	return false
+end
+
+
 -------------------------------------------------
 
 		---REABASTECER---
 
-function refuel()
-	for f = 1, 16 do
-	local info = turtle.getItemDetail(f)
-		if info and info.name == spruceLog then
-			turtle.select(f)
-			turtle.refuel(5)
-		end
-	end
+function refuel(reabastecer)
+	local blocosComer = math.ceil(reabastecer / energiaPorBloco)
+	selectItem(spruceLog)
+	turtle.refuel(blocosComer)
 end
 
 
@@ -114,30 +128,20 @@ end
 
          ---SELECIONAR E COLOCAR SAPLING---
 
-function selecionarColocar(sapling)
-	for s = 1, 16 do
-	local info = turtle.getItemDetail(s)
-		if info and info.name == sapling then
-			turtle.select(s)
-			turtle.place()
-			turtle.turnLeft()
-			turtle.forward()
-			turtle.turnRight()
-			turtle.place()
-			turtle.turnRight()
-			turtle.place()
-			turtle.turnLeft()
-			turtle.back()
-			turtle.place()
-			turtle.turnRight()
-			turtle.forward()
-			turtle.forward()
-			turtle.forward()
-			turtle.turnLeft()
-			turtle.forward()
-			turtle.turnLeft()			
-		end
-	end
+local function colocar()
+	selectItem(sapling)
+	turtle.place()
+	turnLeft()
+	back()		
+	turtle.place()
+	turnRight()
+	turtle.place()
+	back()
+	turtle.place() 
+	back() 
+	turnLeft() 
+	forward() 
+	turnRight() 
 end
 
 -------------------------------------------------
@@ -154,7 +158,7 @@ end
 
 function detectarArvore()
 	local leaves, info = turtle.inspect()
-    if info and info.state.distance == 1 then
+    if leaves and info.state.distance == 1 then
         return true
     end
 	return false
@@ -182,11 +186,12 @@ end
 
 while true do
 	turtle.suckDown()
+	local energiaInicial = turtle.getFuelLevel()
 	if detectarArvore() == true then
 		seMover()
 		cortar()
-		--selecionarColocar(sapling)
-		--refuel()
-		--guardar()
+		colocar()
+		refuel(energiaInicial - turtle.getFuelLevel())
+		guardar()
 	end
 end
