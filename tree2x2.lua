@@ -3,6 +3,34 @@ sapling = "minecraft:spruce_sapling"
 spruceLeaves = "minecraft:spruce_leaves"
 local dirt = "minecraft:podzol"
 
+local function turnRight(numero)
+	local numero = numero or 1
+	for i = 1, numero do
+		turtle.turnRight()
+	end
+end
+
+local function turnLeft(numero)
+	local numero = numero or 1
+	for i = 1, numero do
+		turtle.turnLeft()
+	end
+end
+
+local function forward(numero)
+	local numero = numero or 1
+	for i = 1, numero do
+		turtle.forward()
+	end
+end
+
+local function back(numero)
+	local numero = numero or 1
+	for i = 1, numero do
+		turtle.back()
+	end
+end
+
 -------------------------------------------------
 
          ---CORTAR EMCIMA---
@@ -114,36 +142,36 @@ end
 
 -------------------------------------------------
 
+local function seMover()
+	turnRight()
+	forward()
+	turnLeft()
+	forward()
+end
+
          ---DETECTAR ARVORE---
 
 
 function detectarArvore()
-	leaves, info = turtle.inspect()
-    if  info.state.distance == 1 then
-		turtle.turnLeft()
-		turtle.forward()
-		turtle.turnRight()
-		turtle.forward()
-		turtle.forward()
-		turtle.forward()
-		turtle.turnRight()
+	local leaves, info = turtle.inspect()
+    if info and info.state.distance == 1 then
         return true
     end
+	return false
 end
 
 -------------------------------------------------
 
          ---CORTAR ARVORE---
 
-function cortar()    
-        turtle.forward()
+function cortar()
 		turtle.dig()
-		turtle.forward()
+		forward()
         digUp()
-		turtle.turnRight()
+		turtle.turnLeft()
 		turtle.dig()
 		turtle.forward()
-		turtle.turnLeft()
+		turtle.turnRight()
 		digDown()
 		turtle.dig()
 end
@@ -155,9 +183,10 @@ end
 while true do
 	turtle.suckDown()
 	if detectarArvore() == true then
+		seMover()
 		cortar()
-		selecionarColocar(sapling)
-		refuel()
-		guardar()
+		--selecionarColocar(sapling)
+		--refuel()
+		--guardar()
 	end
 end
