@@ -55,7 +55,7 @@ end
 function naoSelecionar(name)
     for i=1, 16 do
         local info = turtle.getItemDetail(i)
-        if not info or info.name ~= name then
+        if info and info.name ~= name then
             turtle.select(i)
 			return true
         end
@@ -77,7 +77,7 @@ end
 		 
 function guardar()
 	turnAround()
-	while naoSelecionar() do
+	while naoSelecionar(sapling) do
 		turtle.drop()
 	end
 	turnAround()
