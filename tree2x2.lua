@@ -148,8 +148,10 @@ end
 
 local function seMover()
 	turnRight()
+	turtle.dig()
 	forward()
 	turnLeft()
+	turtle.dig()
 	forward()
 end
 
