@@ -139,28 +139,16 @@ local function colocar()
 	back()
 	turtle.place() 
 	back() 
-	turnLeft() 
-	forward() 
-	turnRight() 
 end
 
 -------------------------------------------------
-
-local function seMover()
-	turnRight()
-	turtle.dig()
-	forward()
-	turnLeft()
-	turtle.dig()
-	forward()
-end
 
          ---DETECTAR ARVORE---
 
 
 function detectarArvore()
-	local leaves, info = turtle.inspect()
-    if leaves and info.state.distance == 1 then
+	local madeira, info = turtle.inspect()
+    if madeira and info.name == spruceLog then
         return true
     end
 	return false
@@ -190,7 +178,6 @@ while true do
 	turtle.suckDown()
 	local energiaInicial = turtle.getFuelLevel()
 	if detectarArvore() == true then
-		seMover()
 		cortar()
 		colocar()
 		refuel(energiaInicial - turtle.getFuelLevel())
