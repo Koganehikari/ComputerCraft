@@ -1,6 +1,7 @@
 spruceLog = "minecraft:spruce_log"
 sapling = "minecraft:spruce_sapling"
 spruceLeaves = "minecraft:spruce_leaves"
+local dirt = "minecraft:podzol"
 
 -------------------------------------------------
 
@@ -58,12 +59,12 @@ end
 function digDown()
 	repeat
         madeira, info = turtle.inspectDown()
-        if info.name == spruceLog then
+        if info and info.name ~= dirt then
 			turtle.dig()
             turtle.digDown()
             turtle.down()
         end
-	until info.name ~= spruceLog
+	until info.name == dirt
 end
 
 -------------------------------------------------
