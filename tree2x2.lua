@@ -137,8 +137,7 @@ local function colocar()
 	turnRight()
 	turtle.place()
 	back()
-	turtle.place() 
-	back() 
+	turtle.place()
 end
 
 -------------------------------------------------
